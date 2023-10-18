@@ -1,0 +1,47 @@
+---
+title: "Challenge-1"
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Hi I am **Ariel**. 
+
+I am a Year 2 student studying _Communications and New Media_. I like reading both English and Chinese literature and spend my free time watching movies, and reading books. I also play the piano and volunteer in my free time.
+
+I am excited to learn coding because I believe it will be a fun and interesting skill to have. Although I am not, and have not been, very good with numbers, I have heard from the lectures that coding is more of a language. So I hope to approach this module with an open mind and learn as much as I can!
+
+Here's a picture of me that I took for my volunteering back in 2020! 
+
+
+```{r, out.height= "280px",out.width= "280px",echo=TRUE,eval=TRUE,fig.cap="$A picture of me$"}
+knitr::include_graphics("C:/Users/Ariel/Downloads/nus/y2s1/nm2207/Week-1/BLYN-profile-photo.jpg")
+```
+
+Fun fact! 
+
+I volunteered with the President's Challenge last year and got to meet Mdm President! 
+
+Here's a picture from that exciting experience!
+
+```{r, out.height= "280px",out.width= "280px",echo=TRUE,eval=TRUE,fig.cap="$storytelling$"}
+knitr::include_graphics("C:/Users/Ariel/Downloads/nus/y2s1/nm2207/Week-1/President's Challenge.jpg")
+```
+
+
+Here's a screenshot of the R studio! 
+```{r, out.height= "280px",out.width= "280px",echo=TRUE,eval=TRUE,fig.cap="$R studio$"}
+knitr::include_graphics("C:/Users/Ariel/Downloads/nus/y2s1/nm2207/Week-1/RStudio.png")
+```
+
+
+_Thanks for reading!_ 
+*See you next week* 
