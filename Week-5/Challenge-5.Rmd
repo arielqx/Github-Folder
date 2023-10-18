@@ -1,0 +1,212 @@
+---
+title: "Challenge-5"
+author: "Ariel Quek Xuan"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Questions
+<br>
+
+#### Question-1: Local Variable Shadowing 
+
+Create an R function that defines a global variable called `x` with a value of 5. Inside the function, declare a local variable also named `x` with a value of 10. Print the value of `x` both inside and outside the function to demonstrate shadowing.
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Defining global variable "x" with value 5 
+x <- 5
+# Creating a shadow R function 
+create_shadow <- function(){
+  x <- 10
+}
+# Printing value of "x" inside function
+print(create_shadow ())
+```
+
+```{r,eval=TRUE,echo=TRUE}
+# Printing value of "x" outside function
+print(x)
+```
+<br>
+
+#### Question-2: Modify Global Variable
+
+Create an R function that takes an argument and adds it to a global variable called `total`. Call the function multiple times with different arguments to accumulate the values in `total`.
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Creating global variable called "total" with initial value of 0
+total <- 0 
+
+# Creating R function to add to total
+add_to_total <- function(value) {
+  total <<- total + value
+}
+
+# Calling the function multiple times with different arguments to accumulate values in "total" 
+add_to_total(5)
+add_to_total(10)
+add_to_total(8)
+
+# Printing final value of "total" 
+## (should be 0+10+5+8 = 23)
+print(total)
+```
+<br>
+
+#### Question-3: Global and Local Interaction 
+
+Write an R program that includes a global variable `total` with an initial value of 100. Create a function that takes an argument, adds it to `total`, and returns the updated `total`. Demonstrate how this function interacts with the global variable.
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Creating new global variable "total" with initial value of 100 
+total <- 100
+
+# Creating function that takes argument and adds it to "total", returning the updated "total" 
+updated_total <- function(value) {
+  total <<- total + value 
+  return(total)
+}
+
+# Printing initial value of "total", global variable
+print(total)
+```
+```{r,eval=TRUE,echo=TRUE}
+# Calling function with a new argument to update "total" as a global variable 
+updated_total(20)
+```
+```{r,eval=TRUE,echo=TRUE}
+# Demonstrating how the function has changed the global variable 
+print(total)
+```
+
+<br>
+
+#### Question-4: Nested Functions
+
+Define a function `outer_function` that declares a local variable `x` with a value of 5. Inside `outer_function`, define another function `inner_function` that prints the value of `x`. Call both functions to show how the inner function accesses the variable from the outer function's scope.
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Creating a function "outer_function" 
+outer_function <- function() {
+  x <- 5  
+  inner_function <- function() {
+    print(paste0("Value of 'x' from inner_function:",x, "."))
+  }
+  inner_function()
+}
+
+# Calling the outer function
+outer_function()
+```
+<br>
+
+#### Question-5: Meme Generator Function
+
+Create a function that takes a text input and generates a humorous meme with the text overlaid on an image of your choice. You can use the `magick` package for image manipulation. You can find more details about the commands offered by the package, with some examples of annotating images here: https://cran.r-project.org/web/packages/magick/vignettes/intro.html
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Installing "magick" package
+install.packages("magick",repos = "http://cran.us.r-project.org")
+library(magick)
+
+# Creating function "create_meme"
+create_meme <- function(text,image_path,output_path) {
+  meme_template <- image_read(image_path)
+  
+  # Defining text properties
+  text_color <-"black"
+  text_font <- "Impact"
+  text_size <- 40
+  
+  # Calculating text positions 
+  image_dimensions <- image_info(meme_template)
+  text_x <- image_dimensions$width / 2 
+  text_y <- image_dimensions$height / 2
+  
+  # Adding text to the image
+  meme_template <- image_annotate(
+    meme_template,
+    text,
+    location = "+350+580",
+    color = text_color,
+    size = text_size,
+    font = text_font
+  )
+  image_write(meme_template,path=output_path)
+}
+
+# Input from comp 
+text_input <- "Knitting R file into PDF" ##Input alternate text in replacement for this 
+image_input <- "meme_template_stress.jpg"
+output_file <- "R_MEME.jpg"
+
+create_meme(text_input,image_input,output_file)
+```
+
+```{r,eval=TRUE,echo=TRUE}
+#inserting meme here
+knitr::include_graphics("C:/Users/Ariel/Downloads/nus/y2s1/nm2207/Week-5/R_MEME.jpg")
+```
+<br>
+
+#### Question-6: Text Analysis Game  
+
+Develop a text analysis game in which the user inputs a sentence, and the R function provides statistics like the number of words, characters, and average word length. Reward the user with a "communication skill level" based on their input.
+
+**Solutions:**
+
+```{r, eval=TRUE,echo=TRUE}
+# Creating Text Analysis Game Function titled "Verboverse"
+Verboverse <- function() {
+  # Game text
+  print(paste0("Welcome to Verboverse!"))
+  print(paste0("Let's put your communication skill level to the test."))
+  
+  # User input 
+  user_input <- readline("Enter your sentence:")
+  
+  # Sentence analysis
+  words <- unlist (strsplit(user_input," "))
+  number_of_words <- length(words)
+  number_of_chars <- nchar(user_input)
+  average_word_length <- mean(nchar(words))
+  
+  # Determining the communication skill level based on average word length 
+  skill_level <- ifelse(average_word_length <= 5, "Novice", 
+                        ifelse(average_word_length <= 8, 
+                               "Intermediate","Expert")) 
+  
+  # Displaying statistics and skill level 
+  print(paste0("Results:"))
+  print(paste0("Number of words:",number_of_words,"."))
+  print(paste0("Number of characters:",number_of_chars,"."))
+  print(paste0("Average word length:",round(average_word_length,2),"."))
+  print(paste0("Communication Skill Level:",skill_level,"."))
+}
+
+#Running text game: Verboverse
+Verboverse()
+```
+```{r,eval=TRUE,echo=TRUE}
+#Screenshot of first run 
+knitr::include_graphics("C:/Users/Ariel/Downloads/nus/y2s1/nm2207/Week-5/screenshot2.png")
+```
+
+*_Thank you!_*
+<br>

@@ -1,0 +1,164 @@
+---
+title: "Code-Along-And-Challenge-9"
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Code Along 9 
+
+Part ONE: About tidy vs non-tidy data 
+
+#Tidy data 
+```{r, eval=TRUE, echo=TRUE}
+install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+library(tidyverse)
+tidydata <- tribble( ~country, ~year, ~cases, ~population, "Afghanistan", 1999, 745, 19987071,
+"Afghanistan", 2000, 2666, 20595360,
+"Brazil", 1999, 37737, 172006362,
+"Brazil", 2000, 80488, 174504898,
+"China", 1999, 212258, 1272915272,
+"China", 2000, 213766, 1280428583)
+
+tidydata
+```
+
+
+#Non-tidy data 
+```{r, eval=TRUE, echo=FALSE}
+nontidydata <- tribble( ~country,~year,~rate,
+"Afghanistan", 1999, "745/19987071",
+"Afghanistan", 2000, "2666/20595360",
+"Brazil", 1999, "37737/172006362",
+"Brazil", 2000, "80488/174504898",
+"China", 1999, "212258/1272915272",
+"China", 2000, "213766/1280428583")
+
+nontidydata
+```
+
+#Example of benefit of tidy data (slide 9) 
+```{r, eval=TRUE, echo=TRUE}
+tidydata %>%
+ group_by(year) %>%
+ summarize(total_cases = sum(cases))
+```
+
+#How to tidy data - Example 1 (slides 11-13)
+```{r, eval=TRUE, echo=TRUE}
+tidieddata <- nontidydata %>%
+ separate(rate, into = c("cases",
+ "population"),
+ sep = "/")
+
+tidieddata
+
+newtidieddata <- tidieddata %>%
+ pivot_longer(
+ cols = cases:population,
+ names_to = "measurement"
+,
+ values_to = "value"
+ )
+
+newtidieddata
+
+ggplot(newtidieddata) +
+ aes(x=year,y=value, colour=country) +
+ geom_point() +
+ geom_line(aes(group = country))+
+ facet_wrap(~measurement) +
+ theme_bw()
+```
+
+#How to reshape data using "pivot_longer" - Example 2 (slides 14-17)
+```{r, echo=TRUE, eval=TRUE}
+df <- tribble(
+ ~id, ~bp1, ~bp2,
+ "A", 100, 120,
+ "B", 140, 115,
+ "C", 120, 125)
+
+df
+
+df %>%
+ pivot_longer(
+ cols = bp1:bp2,
+ names_to = "measurement",
+ values_to = "value"
+ )
+```
+#How to reshape data using "pivot_wider" - Example 3 (slide 18)
+```{r, eval=TRUE, echo=TRUE}
+newtidieddata
+
+newtidieddata %>% pivot_wider(names_from="measurement", 
+                              values_from ="value")
+```
+
+#Reshaping data using "pivot_wider" - Example 4 (slide 19) 
+```{r, eval=TRUE, echo=TRUE}
+df <- tribble(
+ ~id, ~measurement, ~value,
+ "A", "bp1", 100,
+ "B", "bp1", 140,
+ "B", "bp2", 115,
+ "A", "bp2", 120,
+ "A", "bp3", 105)
+df
+
+df %>%
+ pivot_wider(
+ names_from = measurement,
+ values_from = value)
+```
+## Challenge 9 
+
+# Question 1
+```{r, eval=TRUE, echo=TRUE}
+library(tidyverse)
+billboard
+billboard_new <- billboard %>% 
+  pivot_longer(
+    cols=starts_with("wk"),
+    names_to="week",
+    values_to="value",
+    values_drop_na = TRUE) %>% mutate(week = parse_number(week))
+billboard_new
+```
+
+```{r,eval=TRUE, echo=TRUE}
+library(ggplot2)
+# Creating a plot of rankings of tracks across time
+ggplot(data=billboard_new, 
+       mapping = aes(x = week,
+                     y = value)) + 
+         geom_line(color="purple") +
+         labs(title = "Rank of tracks across time",
+              x ="Week", 
+              y = "Rank")
+```
+
+# Question 2
+```{r, echo=TRUE, eval=TRUE}
+cms_patient_experience
+## A data set that collects data about patient experiences 
+patients <- cms_patient_experience %>%
+  pivot_wider(names_from = measure_cd, 
+              values_from= prf_rate,
+              id_cols=starts_with("org"))
+
+##to get unique IDs
+uniqueIDs <- patients %>% 
+  select(org_pac_id,org_nm) %>% 
+  distinct()
+uniqueIDs
+```
+
+Thank You! 

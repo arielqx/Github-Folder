@@ -1,0 +1,249 @@
+---
+title: "Challenge 7" 
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output: 
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Challenge 7 Instructions 
+
+1. You are required to focus on the lecture videos and materials, owing to the break last week
+
+2. The material taught this week is of significant importance for your final projects
+
+3. The challenge this week will be your workbook: a document that you will generate by trying and experimenting with the code snippets taught in the lecture material.
+
+```{r, echo=TRUE,eval=TRUE,warning=FALSE}
+library(tidyverse)
+install.packages("palmerpenguins",repos = "http://cran.us.r-project.org")
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+## Recreating Plot for Palmer Penguins 
+
+Plotting the bill depth against bill length of penguins 
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species))+
+  geom_point() +
+  labs(title = "Bill depth and length", 
+       subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+       x ="Bill depth (mm)", 
+       y = "Bill length (mm)",
+       colour = "Species",
+       caption = "Source: Palmer Station LTER/ palmerpenguins package",
+scale_colour_viridis_d())
+```
+Plotting bill depth against bill length with shaped data points: 
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, colour = species,
+shape = island)) +
+geom_point() + scale_colour_viridis_d()
+```
+
+Changing the size of data points on the plot 
+
+```{r, eval=TRUE, echo=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, colour = species, shape = species,
+size = body_mass_g)) +
+geom_point() + scale_colour_viridis_d()
+```
+
+Manipulating alpha (opacity) of data points in the plot 
+
+```{r, eval=TRUE, echo=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, colour = species,
+shape = species, size = body_mass_g, alpha = flipper_length_mm)) +
+geom_point() + scale_colour_viridis_d()
+```
+
+## Faceting: creating smaller plots that display different subsets of the data 
+
+*1. Plotting the bill length and bill depth of penguins based on the species and the island* 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins) +
+aes(x = bill_depth_mm,
+y = bill_length_mm) +
+geom_point() +
+facet_grid(species ~ island)
+```
+
+*2. Plotting bill length and bill depth of penguins based on sex against species* 
+```{r, eval=TRUE, echo=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + geom_point() +
+facet_grid(species ~ sex)
+```
+
+*3. Alternatively, plotting bill length and bill depth of penguins based on species against sex* 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + geom_point() +
+facet_grid(sex ~ species)
+```
+
+*4. Plotting bill length against bill depth only by species* 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + geom_point() +
+facet_wrap(~ species)
+```
+*5. Plotting bill length against bill depth by species, in separate grids*
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + geom_point()+
+facet_wrap(~ species, ncol =2)
+```
+*6. Adding colour (without a legend)* 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +
+geom_point() + facet_grid(species ~ sex) + scale_color_viridis_d() +
+guides(color =
+"none"
+)
+```
+## Visualizing numeric variables using Lending Club Data set
+
+Retrieving dataset
+```{r, echo=TRUE, eval=TRUE}
+install.packages("openintro", repos = "http://cran.us.r-project.org")
+library(openintro)
+library(tidyverse)
+glimpse(loans_full_schema)
+```
+Selecting variables
+```{r, echo=TRUE, eval=TRUE}
+loans <- loans_full_schema %>%
+select(loan_amount, interest_rate, term, grade,
+state, annual_income, homeownership, debt_to_income)
+glimpse(loans)
+```
+Plotting histogram of loan amount against loan count with different binwidth lengths 
+
+*1. binwidth = 1000*
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans) + aes(x = loan_amount) +
+geom_histogram(binwidth = 1000)
+```
+
+*2. binwidth = 5000*
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans) + aes(x = loan_amount) +
+geom_histogram(binwidth = 5000)
+```
+
+*3. binwidth = 20000* 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans) + aes(x = loan_amount) +
+geom_histogram(binwidth = 20000)
+```
+
+Customizing histograms, with colors and labels
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = loan_amount, fill = homeownership)) +
+geom_histogram(binwidth = 5000, alpha = 0.5) + labs(x ="Loan amount ($)",y ="Frequency",title ="Amounts of Lending Club loans")
+```
+
+Creating facet plot of histograms with categorical variable 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans, aes(x = loan_amount, fill = homeownership)) + geom_histogram(binwidth = 5000) + labs(x ="Loan amount ($)",y =
+"Frequency",title ="Amounts of Lending Club loans") +facet_wrap(~ homeownership, nrow =3)
+```
+
+Creating Density Plot with customizable bandwidth
+
+1. Default bandwidth 
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = loan_amount)) +
+geom_density(adjust=1)
+```
+
+2. Increased bandwidth (2)
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = loan_amount)) +
+geom_density(adjust=2)
+```
+
+3. Decreased bandwidth (0.5)
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = loan_amount)) +
+geom_density(adjust=0.5)
+```
+
+Customizing density plot!
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = loan_amount, fill = homeownership)) +
+  geom_density(adjust =2, alpha =0.5) +labs(x ="Loan amount ($)",y ="Density",title ="Amounts of Lending Club loans", fill ="Homeownership")
+```
+## Plotting box plots 
+
+Plotting interest rate of loans 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans, aes(x = interest_rate)) +geom_boxplot()
+```
+
+Plotting annual income against loans 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans, aes(x = annual_income)) +
+geom_boxplot()
+```
+Customizing box plots 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans, aes(x = interest_rate)) +geom_boxplot() +labs(x ="Interest rate (%)",y =NULL,title ="Interest rates of Lending Club loans") +theme( axis.ticks.y = element_blank(), axis.text.y = element_blank() )
+```
+
+By grade of loan 
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = interest_rate,y = grade)) +geom_boxplot() +labs(x =
+"Interest rate (%)",y ="Grade",title ="Interest rates of Lending Club loans",subtitle= "by grade of loan")
+```
+
+## Creating Scatterplot 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans, aes(x = debt_to_income, y = interest_rate)) +
+geom_point()
+```
+
+## Creating Hex Plot 
+```{r, echo=TRUE, eval=TRUE}
+ggplot(loans %>% filter(debt_to_income <100),aes(x = debt_to_income, y = interest_rate)) +geom_hex()
+```
+
+## Creating Bar Plot 
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = homeownership)) +geom_bar()
+```
+
+Customizing segmented bar plot (by grade of homeownership)
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = homeownership,
+fill = grade)) +
+geom_bar()
+```
+
+Customizing bar plots (by proportion)
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(y = homeownership, fill = grade)) + geom_bar(position =
+"fill") +labs( x ="Proportion", y ="Homeownership", fill ="Grade", title ="Grades of Lending Club loans", subtitle="and homeownership of lendee")
+```
+
+## Creating violin plots 
+```{r, eval=TRUE, echo=TRUE}
+ggplot(loans, aes(x = homeownership, y = loan_amount)) +
+geom_violin()
+```
+
+## Creating ridge plots 
+```{r, echo=TRUE, eval=TRUE}
+library(ggridges)
+ggplot(loans, aes(x = loan_amount, y = grade, fill = grade, color = grade)) +geom_density_ridges(alpha =0.5)
+```
+
+Thank you! 
