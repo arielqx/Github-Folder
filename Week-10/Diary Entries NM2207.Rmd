@@ -1,0 +1,126 @@
+---
+title: "Diary Entries NM2207"
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Diary Entry #1
+
+**(1) Finalized Topic for Final Project:**
+
+Premier League matches from 2021-2022 season!
+
+In the Premier League 2021-2022, there were many surprises undoubtedly, and the predictions made during the season varied. There have been many debate about outstanding players as well, with many critics/commentators seeming to agree only on Kevin De Bruyne from Manchester City.
+
+It seems interesting to look into the matches leading up to Man City's win, while investigating the consistency of the various club's play on the field.
+
+**(2) Data sources curated so far:**
+
+*Data sources are derived from [[Tidy tuesday](%5Bhttps://github.com/rfordatascience/tidytuesday#about-tidytuesday)](https://github.com/rfordatascience/tidytuesday#about-tidytuesday), as recommended via Canvas!*
+
+The CSV files are downloaded in my local desktop:
+
+\- soccer 21-22.csv
+
+\- weeklyrank.csv
+
+The links to relevant data sets and websites can be found here:
+
+\- <https://github.com/rfordatascience/tidytuesday#about-tidytuesday>
+
+\- <https://www.kaggle.com/datasets/evangower/premier-league-match-data>
+
+\- end -
+
+## Diary Entry #2
+
+### Question 1:
+
+***Finalised Idea/ Theme*****:**
+
+-   Topic: A quantitative analysis of the 20/21 Premier League season
+
+-   Question: "**How influential was the home advantage for the football clubs in the 20-21 Premier League Season?"**
+
+-   *Considering the performance analysis and the relationship with the match outcomes*
+
+**In order to answer the above question:**
+
+-   First, look at the performance analysis by calculating and comparing the average number of points and goal differences for each team over the season.
+
+-   Second, look at the percentage of matches won by the home team and the away team, and compare.
+
+-   Lastly, look at the correlation between the two, especially looking at the correlation between perhaps the number of shots on target for home teams as opposed to away teams, etc.
+
+### Question 2
+
+-   This is an important question because it is commonly assumed that football teams are more likely to win if they're playing at home. However, the best way to answer this question accurately is through data analysis, as it allows us to use the precise data of goals scores by each time to measure the home advantage.
+
+-   This can be helpful in predicting the scores for future football matches, and identifying how relevant the fan atmosphere is for matches. This information can be very influential considering the post-Covid boom of spectators for various sports.
+
+-   On more personal fronts, as a football fan, this question will help with match analysis, especially with the ongoing Premier League season.
+
+## Data:
+
+### Question 3
+
+-   The data packages are as follows:
+
+Downloading data package:
+
+```{r, eval=TRUE, echo=TRUE}
+#Opening the relevant CSV files   
+
+##Reading soccer data from 21-22 Premier League
+
+soccer <- read.csv("soccer21-22.csv")
+head(soccer)
+```
+
+```{r, echo=TRUE, eval=TRUE}
+## Reading the weekly rankings of the FCs  
+
+weeklyrank <- read.csv("weeklyrank.csv") 
+head(weeklyrank)
+```
+
+From these data packages, the following columns and rows will be used:
+
+-   In "weeklyrank", I will be using the columns "Team", "Rank" and "Week"
+
+-   In "soccer", I will be using "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG", "HTR", "HS", "AS", "HST", "AST".
+
+-   <div>
+
+    Clarifying acronyms
+
+    -   FTHG - full time home goals
+
+    -   FTAG - full time away goals
+
+    -   HTHG - half time home goals
+
+    -   HTAG - half time away goals
+
+    -   FTR - full time result
+
+    -   HTR - half time result
+
+    -   HS - home shots
+
+    -   AS - away shots
+
+    -   HST - home shots on target
+
+    -   AST - away shots on target
+
+    </div>
+
+\- end -
