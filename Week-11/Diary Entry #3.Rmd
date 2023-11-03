@@ -1,0 +1,59 @@
+---
+title: 'Diary Entry #3'
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Diary Entry #3 
+
+***Visualizations for final project:***
+
+-   Bar charts: Plotting the wins of each team when on home grounds, and plotting a separate graph for wins on away grounds.
+
+```{=html}
+<!-- -->
+```
+-   Scatter plots: Plotting weekly rankings for teams on home grounds as opposed to on away grounds.
+
+-   Pie charts: To plot home advantage influence for each team
+
+***How I plan to make it interactive:***
+
+-   ggplot2 package: To plot bar charts and scatter plots colour coded for each team
+
+shiny package: For addition of app-like elements (whether through sliders or inputs to allow users to see specific data for specific games or filter for specific teams they are fans of)
+
+***Concepts incorporated in my final project:***
+
++---------+-------------------------------------------------------------------------------+
+| Week(s) | Topics/Concepts                                                               |
++=========+===============================================================================+
+| 1       | R Markdown concepts:                                                          |
+|         |                                                                               |
+|         | -   Adding photos, changing the appearance of text (**bold**, *italicizing*)  |
++---------+-------------------------------------------------------------------------------+
+| 2       | Data Visualization concepts:                                                  |
+|         |                                                                               |
+|         | -   ggplot2 package                                                           |
+|         |                                                                               |
+|         | -   Plotting scatter plots                                                    |
+|         |                                                                               |
+|         | -   Plotting bar graphs                                                       |
++---------+-------------------------------------------------------------------------------+
+| (self)  | Data Visualization: Pie chart                                                 |
++---------+-------------------------------------------------------------------------------+
+| 7       | Data Visualization:                                                           |
+|         |                                                                               |
+|         | -   Visualizing different types of variables using ggplot2                    |
++---------+-------------------------------------------------------------------------------+
+| 8       | Data Visualization:                                                           |
+|         |                                                                               |
+|         | -   Creating interactive elements using Shiny and Quarto                      |
++---------+-------------------------------------------------------------------------------+
+
+\- end -
