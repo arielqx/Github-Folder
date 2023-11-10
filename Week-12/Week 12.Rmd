@@ -1,0 +1,144 @@
+---
+title: "Final Project"
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Premier League 21-22
+
+### **Research Question:**
+
+> *"How influential was the home advantage for the football clubs in the 21-22 premier league season, for the big six football clubs?"*
+
+### **Data Anaysis**
+
+Acquiring the relevant (cleaned) data-sets:
+
+-   Looking at structure of data-frame of relevant match details:
+
+```{r, echo=TRUE, eval=TRUE}
+soccer <- read.csv("soccer21-22.csv") 
+
+weeklyrank <- read.csv("weeklyrank.csv") 
+str(soccer)
+```
+
+-   Looking at structure of data-frame of weekly rankings:
+
+```{r, echo=TRUE, eval=TRUE}
+str(weeklyrank)
+```
+
+**From the above we can identify a few important variables:**
+
+| Variable | Significance         | Used For                                                          | Type | DF         |
+|----------|----------------------|-------------------------------------------------------------------|------|------------|
+| \$HTHG   | Half Time Home Goals | Analysis of home advantage on half time result                    | INT  | soccer     |
+| \$HTAG   | Half Time Away Goals | Analysis of home advantage on half time result                    | INT  | soccer     |
+| \$HTR    | Half Time Result     | Analysis of home advantage on half time result                    | CHR  | soccer     |
+| \$FTHG   | Full Time Home Goals | Analysis of home advantage on full time result                    | INT  | soccer     |
+| \$FTAG   | Full Time Away Goals | Analysis of home advantage on full time result                    | INT  | soccer     |
+| \$FTR    | Full Time Result     | Analysis of home advantage on full time result                    | CHR  | soccer     |
+| \$Team   | Football Club Name   | Analysis of effect of home advantage on weekly ranking of each FC | CHR  | weeklyrank |
+| \$Rank   | Ranking out of 20    | Analysis of effect of home advantage on weekly ranking of each FC | INT  | weeklyrank |
+| \$Week   | Week Number          | Analysis of effect of home advantage on weekly ranking of each FC | INT  | weeklyrank |
+
+**Creating a new data frame:**
+
+#### From "soccer" data set:
+
+1.  Creating a new data frame (df) by selecting columns "Date", "HomeTeam", "AwayTeam", "FTR", "FTHG" and "FTAG".
+
+```{r, echo=TRUE, eval=TRUE}
+library(tidyverse)
+df <- select(soccer,
+             Date, 
+             FTR,
+             HST,
+             AST,
+             HomeTeam, 
+             AwayTeam)
+head(df)
+```
+
+Grouping the data into separate groups by HomeTeams:
+
+```{r, echo=TRUE, eval=TRUE}
+ManUnited_df <- df[df$HomeTeam=="Man United",]
+Liverpool_df <- df[df$HomeTeam=="Liverpool",]
+Arsenal_df <- df[df$HomeTeam=="Arsenal",]
+Chelsea_df <- df[df$HomeTeam=="Chelsea",]
+ManCity_df <- df[df$HomeTeam=="Man City",]
+Tottenham_df <- df[df$HomeTeam=="Tottenham",]
+```
+
+Home team wins vs away team wins for big 6:
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+library(cowplot)
+
+fig1 <- ggplot(ManUnited_df, aes(x=Date, y=FTR))+geom_point(color="red2") + labs(x="Dates",y="Full Time Result", title="Man United") 
+fig2 <- ggplot(Liverpool_df, aes(x=Date, y=FTR))+geom_point(color="firebrick") + labs(x="Dates",y="Full Time Result", title="Liverpool")
+fig3 <- ggplot(Arsenal_df, aes(x=Date, y=FTR))+geom_point(color="coral1") + labs(x="Dates",y="Full Time Result", title="Arsenal") 
+fig4 <- ggplot(Chelsea_df, aes(x=Date, y=FTR))+geom_point(color="blue") + labs(x="Dates",y="Full Time Result", title="Chelsea") 
+fig5 <- ggplot(ManCity_df, aes(x=Date, y=FTR))+geom_point(color="lightskyblue") + labs(x="Dates",y="Full Time Result", title="Man City") 
+fig6 <- ggplot(Tottenham_df, aes(x=Date, y=FTR))+geom_point(color="navyblue") + labs(x="Dates",y="Full Time Result", title="Tottenham") 
+
+```
+
+```{r, eval=TRUE, echo=TRUE}
+Final_Results <- plot_grid(
+  fig1 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig2 + theme(legend.justification = c(1,0), axis.text.x = element_text(size = 3)), 
+  fig3 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig4 + theme(legend.justification = c(1,0), axis.text.x = element_text(size =3
+)), 
+  fig5 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)),
+fig6 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  align ="v", 
+  axis ="lr", 
+  nrow =3, 
+  ncol =2, 
+  labels = LETTERS[1:6], 
+  rel_heights = c(40,50))
+
+ggsave("Final.png",Final_Results,width=10, height=8, units="in")
+```
+
+The advantage could be constituted by the number of shots on target for the home teams on home grounds, considering how they may be used to playing with the specific environments on home ground.
+
+Hence, looking at all six teams' shots on target when on home grounds as opposed to their opponents:
+
+```{r, eval=TRUE, echo=TRUE}
+shots <- ggplot(df, aes(x=Date)) +
+  geom_line(aes(y=HST, color="Home Shots on Target")) +
+  geom_line(aes(y=AST, color="Away Shots on Target")) +
+  labs(title="Home vs Away Shots on Target",
+       x = "Date",
+       y = "Shots on Target") + 
+  scale_color_manual(name="Shots", values=c("Home Shots on Target" = "purple", "Away Shots on Target" = "lightblue1")) +
+  theme(axis.text.x = element_text(size = 3))
+
+ggsave("Shots.png",shots, width=10, height=8, units="in")
+```
+
+### **Discussion of Findings:**
+
+From the findings, it is clear that from a glance, most of the time the home team will get a win when playing on home grounds:
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+knitr::include_graphics("Final.png")
+```
+
+### **References:**
+
+*WIP...*

@@ -1,0 +1,26 @@
+---
+title: 'Dairy Entry #4'
+author: "Ariel Quek"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Diary Entry #4 
+
+After starting on the data analysis and visualization, some challenges encountered involved the scope and perimeters I had set for the project at the start:
+
+**Instead of doing data analysis for all 20 teams in the EPL, I narrowed it down to 6**
+
+-   This is because the previous scope for analysis was too broad and the data could not be represented well visually
+
+-   With just 6 teams instead, the data can be represented more evenly and better.
+
+-   Using the 6 teams as a sample is also viable considering the history of their performance in the EPL.
+
+-   This would be better than relying on the big 4, as it gives more teams' data to look at.
+
+\- end -
