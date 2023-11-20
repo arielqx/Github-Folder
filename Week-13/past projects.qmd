@@ -1,0 +1,79 @@
+---
+title: "Past Projects"
+mainfont: Calibri
+
+format: 
+  html: 
+    link-external-icon: true
+    link-external-newwindow: true
+    link-external-filter: '^(?:http:|https:)\/\/www\.quarto\.org\/custom'
+---
+
+All relevant documents are uploaded on the Github Repository [here](https://github.com/arielqx/Github-Folder.git).
+
+Here's a snippet of the work I've done for NM2207 so far! 😊
+
+## Week 1
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-1/test.html)
+
+## Week 2
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/34cc216a4475c925cca198dd9eac16f05d829cdb/Week-2/Challenge-2.pdf)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-2/code%20along%20r.R)
+
+## Week 3
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-3/Challenge-3.Rmd)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-3/Code-along-3.pdf)
+
+## Week 4
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-4/Challenge-4.Rmd)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-4/Code-along-4.html)
+
+## Week 5
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-5/Challenge-5.html)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-5/Code-along-5.pdf)
+
+## Week 6
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-6/Challenge-6.pdf)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-6/Week-6_%20Code-along_Ariel%20Quek%20Xuan.pdf)
+
+## Week 7
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-7/Challenge%207_FINAL%20VERSION.pdf)
+
+## Week 8
+
+-   [Challenge](https://github.com/arielqx/Github-Folder/blob/main/Week-8/Challenge-8-Final.pdf)
+
+-   [Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-8/Code-Along-8-Final.pdf)
+
+## Week 9
+
+-   [Challenge and Code Along](https://github.com/arielqx/Github-Folder/blob/main/Week-9/Code-Along-And-Challenge-9.pdf)
+-   [Diary Entry #1](https://github.com/arielqx/Github-Folder/blob/main/Week-9/Diary-entry-1.pdf)
+
+## Week 10
+
+-   [Diary Entry #2](https://github.com/arielqx/Github-Folder/tree/48db5a1197b5da6d418ec2c85bb972774ff9649b/Week-10)
+
+## Week 11
+
+-   [Diary Entry #3](https://github.com/arielqx/Github-Folder/blob/main/Week-11/Diary-Entries-NM2207.pdf)
+
+## Week 12
+
+-   [Diary Entry #4](https://github.com/arielqx/Github-Folder/blob/main/Week-12/Diary-Entries-NM2207.pdf)
+
+## Final Submission 
+
+-   Write-up!

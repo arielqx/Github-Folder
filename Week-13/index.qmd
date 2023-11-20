@@ -1,0 +1,14 @@
+---
+title: "Hello!"
+mainfont: Calibri
+---
+
+*Welcome!* 😊
+
+***This website was created for the module NM2207 Computational Media Literacy!***
+
+Check out the "[*About Me*](https://arielqx.github.io/about.html)*"* page to read more about me, the"[Past Projects](https://arielqx.github.io/past%20projects.html)" page to read about my progress in NM2207, and the *"[Data Story](https://arielqx.github.io/project.html)"* page to take a look at my final project for NM2207.
+
+If you have any questions, please head on over to the *"[Ask A Question](https://arielqx.github.io/question.html)"* tab to email any questions to me!\
+\
+*Hope you have fun!* 🤍

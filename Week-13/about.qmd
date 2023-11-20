@@ -1,0 +1,57 @@
+---
+title: "About Me"
+mainfont: Calibri
+execute:
+  echo: FALSE
+  
+format: 
+  html: 
+    link-external-icon: true
+    link-external-newwindow: true
+    link-external-filter: '^(?:http:|https:)\/\/www\.quarto\.org\/custom'
+---
+
+## **Introduction:**
+
+I am *Ariel*, a year 2 CNM (Communications and New Media) student at NUS!
+
+```{r}
+#| eval: TRUE
+#| out.width: "50%"
+#| fig-align: center
+knitr::include_graphics("about.jpg")
+```
+
+## **Courses I've Taken:**
+
+As of **end-2023**, I have taken the following modules:
+
+*Communications and New Media Modules* \~
+
+-   [NM1101E](https://nusmods.com/courses/NM1101E/communications-new-media-and-society) - Communications, New Media and Society
+
+-   [NM2101](https://nusmods.com/courses/NM2101/theories-of-communications-and-new-media) - Theories of Communications and New Media
+
+-   [NM2103](https://nusmods.com/courses/NM2103/quantitative-research-methods) - Quantitative Research Methods
+
+-   [NM2104](https://nusmods.com/courses/NM2104/qualitative-communication-research-methods) - Qualitative Communication Research Methods
+
+-   [NM2207](https://nusmods.com/courses/NM2207/computational-media-literacy) - Computational Media Literacy ***(this module!*** 😄***)***
+
+*Common Modules \~*
+
+-   [DTK1234](https://nusmods.com/courses/DTK1234/design-thinking) - Design Thinking
+
+-   [FAS1101](https://nusmods.com/courses/FAS1101/writing-academically-arts-and-social-sciences) - Writing Academically: Arts and Social Sciences
+
+-   [HSA1000](https://nusmods.com/courses/HSA1000/asian-interconnections) - Asian Interconnections
+
+-   [HSS1000](https://nusmods.com/courses/HSS1000/understanding-social-complexity) - Understanding Social Complexity
+
+-   [HSH1000](https://nusmods.com/courses/HSH1000/the-human-condition) - The Human Condition
+
+-   [HSI1000](https://nusmods.com/courses/HSI1000/how-science-works-why-science-works) - How Science Works, Why Science Works
+
+-   [GEA1000](https://nusmods.com/courses/GEA1000/quantitative-reasoning-with-data) - Quantitative Reasoning
+
+From each module, I have learnt many valuable skills, and had a lot of fun! 😁

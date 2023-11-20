@@ -1,0 +1,306 @@
+---
+title: "Data Story"
+mainfont: Calibri
+execute: 
+  echo: false
+  warning: false
+---
+
+# Premier League 21-22
+
+## **Research Question:**
+
+> *"How influential was the home advantage for the Big Six football clubs in the 21-22 premier league season?"*
+
+## **About the Premier League**
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+knitr::include_graphics("logo.avif")
+```
+
+The Premier League is the highest tier of football matches in the English football league. A total of 20 top football teams will compete in this league, which takes place between August and May annually, for a total of 380 matches.
+
+Three points are awarded for a win, one point for a draw, and none are awarded for a loss. The champion emerges with the most points at the end of the season and wins the Premier League title.
+
+Read more on the Premier League's [official website](https://www.premierleague.com/premier-league-explained).
+
+## Big Six FCs
+
+Of the 20 football clubs that compete in the Premier League, there have been a dominance of six main football teams since the 2010s.
+
+These six football clubs include *(in no particular order)*:
+
+| Team              | Number of Wins (since 2009) |
+|-------------------|-----------------------------|
+| Manchester United | 2                           |
+| Liverpool         | 1                           |
+| Arsenal           | 0                           |
+| Chelsea           | 2                           |
+| Manchester City   | 7                           |
+| Tottenham Hotspur | 0                           |
+
+More information about why these clubs are the "Big Six" can be found [here.](https://www.sportingnews.com/ca/soccer/news/who-are-premier-league-big-six-top-english-clubs-nickname-explained/8onqxiy3jynf1qr8b8kt8aags)
+
+## Premier League 2021-2022
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+knitr::include_graphics("mancitywin.jpg")
+```
+
+In the Premier League season of 2021-2022, Manchester City football club clinched the championship once again, after winning the 2020-2021 season as well, clocking their 6th Premier League title.
+
+### The Data
+
+Two sets of data "soccer" and "weekly rank" with the following variables:
+
+```{r, echo=FALSE, eval=TRUE}
+soccer <- read.csv("soccer21-22.csv")
+weeklyrank <- read.csv("weeklyrank.csv")
+str(soccer)
+```
+
+```{r, echo=FALSE, eval=TRUE}
+str(weeklyrank)
+```
+
+| Variable | Significance         | Used For                                                          | Type | DF         |
+|----------|----------------------|-------------------------------------------------------------------|------|------------|
+| \$HTHG   | Half Time Home Goals | Analysis of home advantage on half time result                    | INT  | soccer     |
+| \$HTAG   | Half Time Away Goals | Analysis of home advantage on half time result                    | INT  | soccer     |
+| \$HTR    | Half Time Result     | Analysis of home advantage on half time result                    | CHR  | soccer     |
+| \$FTHG   | Full Time Home Goals | Analysis of home advantage on full time result                    | INT  | soccer     |
+| \$FTAG   | Full Time Away Goals | Analysis of home advantage on full time result                    | INT  | soccer     |
+| \$FTR    | Full Time Result     | Analysis of home advantage on full time result                    | CHR  | soccer     |
+| \$Team   | Football Club Name   | Analysis of effect of home advantage on weekly ranking of each FC | CHR  | weeklyrank |
+| \$Rank   | Ranking out of 20    | Analysis of effect of home advantage on weekly ranking of each FC | INT  | weeklyrank |
+| \$Week   | Week Number          | Analysis of effect of home advantage on weekly ranking of each FC | INT  | weeklyrank |
+
+### **Creating a new data frame:**
+
+Creating a new data frame *(df)* by selecting columns *"Date", "HomeTeam", "AwayTeam", "FTR", "FTHG"* and *"FTAG"*.
+
+```{r, echo=FALSE, eval=TRUE}
+library(tidyverse) 
+df <- select(soccer,
+             Date,               
+             FTR,              
+             HST,              
+             AST,              
+             HomeTeam,
+             AwayTeam) 
+```
+
+```{r, echo=FALSE, eval=TRUE}
+## Creating separate dataframes 
+ManUnited_df <- df[df$HomeTeam=="Man United",] 
+Liverpool_df <- df[df$HomeTeam=="Liverpool",] 
+Arsenal_df <- df[df$HomeTeam=="Arsenal",] 
+Chelsea_df <- df[df$HomeTeam=="Chelsea",] 
+ManCity_df <- df[df$HomeTeam=="Man City",] 
+Tottenham_df <- df[df$HomeTeam=="Tottenham",]
+```
+
+### **Findings:**
+
+**Home Team vs Away Team wins for Big 6 Teams:**
+
+```{r, eval=TRUE, echo=FALSE}
+library(ggplot2)
+library(cowplot)
+
+fig1 <- ggplot(ManUnited_df, aes(x=Date, y=FTR))+geom_point(color="red2") + labs(x="Dates",y="Full Time Result", title="Man United") 
+fig2 <- ggplot(Liverpool_df, aes(x=Date, y=FTR))+geom_point(color="firebrick") + labs(x="Dates",y="Full Time Result", title="Liverpool")
+fig3 <- ggplot(Arsenal_df, aes(x=Date, y=FTR))+geom_point(color="coral1") + labs(x="Dates",y="Full Time Result", title="Arsenal") 
+fig4 <- ggplot(Chelsea_df, aes(x=Date, y=FTR))+geom_point(color="blue") + labs(x="Dates",y="Full Time Result", title="Chelsea") 
+fig5 <- ggplot(ManCity_df, aes(x=Date, y=FTR))+geom_point(color="lightskyblue") + labs(x="Dates",y="Full Time Result", title="Man City") 
+fig6 <- ggplot(Tottenham_df, aes(x=Date, y=FTR))+geom_point(color="navyblue") + labs(x="Dates",y="Full Time Result", title="Tottenham") 
+```
+
+```{r, eval=TRUE, echo=FALSE}
+Final_Results <- plot_grid(
+  fig1 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig2 + theme(legend.justification = c(1,0), axis.text.x = element_text(size = 3)), 
+  fig3 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig4 + theme(legend.justification = c(1,0), axis.text.x = element_text(size =3
+)), 
+  fig5 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)),
+fig6 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  align ="v", 
+  axis ="lr", 
+  nrow =3, 
+  ncol =2, 
+  labels = LETTERS[1:6], 
+  rel_heights = c(40,50))
+
+ggsave("Final.png",Final_Results,width=10, height=8, units="in")
+```
+
+From the findings, it is clear that from a glance, most of the time the home team will get a win when playing on home grounds. This is most prominent in the case of Liverpool, where out of 20 games, up to 16 games were Home Team wins, and the rest were draws.
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+#| caption: Home Team vs Away Team Wins
+knitr::include_graphics("Final.png")
+```
+
+The advantage could be constituted by the number of shots on target for the home teams on home grounds, considering how they may be used to playing with the specific environments on home ground.
+
+Hence, looking at all six teams' shots on target when on home grounds as opposed to their opponents:
+
+```{r, eval=TRUE, echo=FALSE}
+line1 <- ggplot(ManUnited_df, aes(x=Date,group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+
+  labs(title="Man United Shots", x="Date",y="Shots on Target")+ 
+  scale_color_manual(name="Shots", values=c("Home Shots on Target" = "red2", "Away Shots on Target"="grey")) + theme(axis.text.x=element_text(size=3))
+
+line2 <- ggplot(Liverpool_df, aes(x=Date,group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+ 
+  labs(title="Liverpool Shots", x="Date",y="Shots on Target")+ 
+  scale_color_manual(name="Shots",values=c("Home Shots on Target" = "firebrick", "Away Shots on Target"="grey"))+ theme(axis.text.x=element_text(size=3))
+
+line3 <- ggplot(Arsenal_df, aes(x=Date,group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+
+  labs(title="Arsenal Shots", x="Date",y="Shots on Target")+ 
+  scale_color_manual(name="Shots",values=c("Home Shots on Target" = "coral1", "Away Shots on Target"="grey"))+ theme(axis.text.x=element_text(size=3))
+
+line4 <- ggplot(Chelsea_df, aes(x=Date, group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+
+  labs(title="Chelsea Shots", x="Date",y="Shots on Target")+
+  scale_color_manual(name="Shots",values=c("Home Shots on Target" = "blue", "Away Shots on Target"="grey"))+ theme(axis.text.x=element_text(size=3))
+
+line5 <- ggplot(ManCity_df, aes(x=Date,group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+
+  labs(title="Manchester City Shots", x="Date",y="Shots on Target")+
+  scale_color_manual(name="Shots",values=c("Home Shots on Target" = "lightskyblue", "Away Shots on Target"="grey"))+theme(axis.text.x=element_text(size=3))
+
+line6<- ggplot(Tottenham_df, aes(x=Date,group=1)) + 
+  geom_line(aes(y=HST, color="Home Shots on Target")) + 
+  geom_line(aes(y=AST,color="Away Shots on Target"))+
+  labs(title="Tottenham Shots", x="Date",y="Shots on Target")+
+  scale_color_manual(name="Shots",values=c("Home Shots on Target" = "navyblue", "Away Shots on Target"="grey"))+theme(axis.text.x=element_text(size=3))
+ 
+```
+
+```{r, eval=TRUE, echo=FALSE}
+Shots <- plot_grid(
+  line1 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  line2 + theme(legend.justification = c(1,0), axis.text.x = element_text(size = 3)), 
+  line3 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  line4 + theme(legend.justification = c(1,0), axis.text.x = element_text(size =3
+)), 
+  line5 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)),
+line6 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  align ="v", 
+  axis ="lr", 
+  nrow =3, 
+  ncol =2, 
+  labels = LETTERS[1:6], 
+  rel_heights = c(40,50))
+
+ggsave("Shots.png",Shots,width=10, height=8, units="in")
+```
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+knitr::include_graphics("Shots.png")
+```
+
+For all of the teams, the home team lines largely seem to be greater than that of the away teams. This is further highlighted for teams A to E, Manchester United, Liverpool, Arsenal, Chelsea and Manchester City, whose home shots on target seem to spike much more in matches against away teams, reaching highs that pull the difference apart. However, Tottenham is an exception, with the highest scores being held by the away teams, hitting up to 10 shots on target.
+
+Overall, it seems that the home advantage was indeed influential in helping team have more shots on target. 🤔
+
+**Weekly rankings of each team (H vs A vs D):**
+
+Plot the rankings of each team by week number (bar graph)
+
+```{r, echo=FALSE, eval=TRUE}
+##Creating separate df for each team's weekly rank 
+rank <- select(weeklyrank,
+               Team,
+               Week,
+               Rank)
+head(rank)
+ManUnited_rank <- rank[rank$Team=="Man United",] 
+Liverpool_rank <- rank[rank$Team=="Liverpool",] 
+Arsenal_rank <- rank[rank$Team=="Arsenal",] 
+Chelsea_rank <- rank[rank$Team=="Chelsea",] 
+ManCity_rank <- rank[rank$Team=="Man City",] 
+Tottenham_rank <- rank[rank$Team=="Tottenham",]
+```
+
+```{r, eval=TRUE, echo=FALSE}
+## Creating figures (for grid later)
+fig11 <- ggplot(ManUnited_rank, aes(x=Week, y=Rank))+geom_line(color="red2") + labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Man United") + xlim(1,38) + ylim(20,1)
+
+fig12 <- ggplot(Liverpool_rank, aes(x=Week, y=Rank))+ geom_line(color="firebrick")+labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Liverpool") + xlim(1,38) + ylim(20,1)
+
+fig13 <- ggplot(Arsenal_rank, aes(x=Week, y=Rank))+geom_line(color="coral1") + labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Arsenal") + xlim(1,38) + ylim(20,1) 
+
+fig14 <- ggplot(Chelsea_rank, aes(x=Week, y=Rank))+geom_line(color="blue") + labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Chelsea") + xlim(1,38) + ylim(20,1)
+
+fig15 <- ggplot(ManCity_rank, aes(x=Week, y=Rank))+geom_line(color="lightskyblue") + labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Man City") + xlim(1,38) + ylim(20,1)
+
+fig16 <- ggplot(Tottenham_rank, aes(x=Week, y=Rank))+geom_line(color="navyblue") + labs(x="Week No.(of 38)",y="Rank No. (of 20)", title="Tottenham") + xlim(1,38) + ylim(20,1)
+```
+
+```{r, eval=TRUE, echo=FALSE}
+## Plotting the grid for line graphs 
+library(ggplot2)
+library(cowplot)
+Rankplot <- plot_grid(
+  fig11 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig12 + theme(legend.justification = c(1,0), axis.text.x = element_text(size = 3)), 
+  fig13 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  fig14 + theme(legend.justification = c(1,0), axis.text.x = element_text(size =3
+)), 
+  fig15 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)),
+fig16 + theme(legend.justification = c(0,1), axis.text.x = element_text(size = 3)), 
+  align ="v", 
+  axis ="lr", 
+  nrow =3, 
+  ncol =2, 
+  labels = LETTERS[1:6], 
+  rel_heights = c(40,50))
+
+ggsave("Rankplot.png",Rankplot,width=10, height=8, units="in")
+```
+
+```{r, echo=FALSE}
+#| eval: TRUE
+#| out.width: "70%"
+#| fig-align: center
+knitr::include_graphics("Rankplot.png")
+```
+
+From the above graph, we can see that most of the teams seem to stay largely at the top ranks for each week, especially teams like Liverpool, Chelsea, and Manchester United. Hence, we take a look at the proportion of games overall played on home ground for each of these three teams to compare and from the data collected above we know that each team has the same number of games (19) played on home ground and each get to be the "Home Team" for 19 matches.
+
+## **Conclusion**
+
+All in all, it is clear that most of the teams playing on home ground do have some advantage, and it does have significant contribution for the games, however there are exceptions such as for teams like Tottenham, and in such cases it is valuable to consider other variable factors affecting the gameplay of the teams involved.
+
+Thanks for reading, and we look forward to our new champions from the ongoing 2022/2023 English Premier League! ⚽
+
+## **References:**
+
+| *Premier league competition format & history \| premier league*. (n.d.). Retrieved 6 November 2023, from https://www.premierleague.com/premier-league-explained
+
+| *Premier League match data 2021-2022*. (2022, September 25). Kaggle. https://www.kaggle.com/datasets/evangower/premier-league-match-data
+
+| Rfordatascience. (n.d.). *GitHub - rfordatascience/tidytuesday: Official repo for the #tidytuesday project*. GitHub. https://github.com/rfordatascience/tidytuesday/
+
+| *Who are the Premier League 'big six'? Top English clubs & nickname explained*. (2021, August 13). https://www.sportingnews.com/ca/soccer/news/who-are-premier-league-big-six-top-english-clubs-nickname-explained/8onqxiy3jynf1qr8b8kt8aags

@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "arielqx.github.io"
+  back-to-top-navigation: true
+  page-footer: 
+      background: light
+      left:
+        - icon: github
+          href: https://github.com/arielqx/
+        - icon: linkedin
+          href: linkedin.com/in/ariel-qx-883305259 
+      right: "Copyright 2023 Ariel QX" 
+  navbar:
+      background: primary
+      search: true
+      left:
+        - href: index.qmd
+          text: "Dashboard"
+        - href: about.qmd
+          text: "About Me"
+        - href: project.qmd
+          text: "Data Story"
+        - href: past projects.qmd
+          text: "Past Projects"
+        - href: question.qmd
+          text: "Ask A Question"
+        
+format:
+  html:
+    theme: 
+       light: pulse
+       dark: vapor
+    fontsize: 1.0em
+    linestretch: 1.7
+    linkcolor: darkorchid
+    css: styles.css
+    toc: true
+
+editor: visual
+
